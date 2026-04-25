@@ -1,0 +1,23 @@
+# Data Processing & ML
+pandas
+numpy
+scikit-learn
+joblib
+imblearn          # Vital for handling the 80% show-up imbalance [cite: 16, 17]
+
+# API & Web Server
+fastapi           # Recommended over Flask for MLOps [cite: 45]
+uvicorn           # ASGI server to run FastAPI
+python-multipart  # For handling form data if needed
+
+# Database
+pymongo           # Official MongoDB driver [cite: 58, 64]
+motor             # Async driver for MongoDB (optional but good for FastAPI)
+
+# Testing & Quality
+pytest            # Required for the 6+ tests [cite: 51]
+flake8            # Required for the GitHub Actions linting [cite: 32, 87]
+httpx             # For testing FastAPI endpoints in pytest
+
+# Deployment
+python-dotenv     # To manage MONGO_URI locally without hardcoding [cite: 20]
