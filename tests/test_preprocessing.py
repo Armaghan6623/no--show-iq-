@@ -1,14 +1,14 @@
-import pytest
-import pandas as pd
-import numpy as np
-import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Add parent directory to path to import our modules
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+import pytest
+import pandas as pd
+
 from noshow_iq.preprocessing import preprocess_pipeline, clean_data, DataPreprocessor
+
 
 class TestPreprocessing:
     """Test suite for preprocessing functionality."""
@@ -57,7 +57,7 @@ class TestPreprocessing:
         assert all(result['days_in_advance'] >= 0)
 
     def test_negative_age_handling(self):
-        data = pd.DataFrame({'Age': [-5, 25], 'ScheduledDay': ['2016-04-29']*2, 
+        data = pd.DataFrame({'Age': [-5, 25], 'ScheduledDay': ['2016-04-29']*2,
                              'AppointmentDay': ['2016-04-29']*2, 'No-show': ['No']*2})
         result = clean_data(data)
         assert all(result['Age'] >= 0)
@@ -95,6 +95,7 @@ class TestPreprocessing:
         _, report = preprocessor.preprocess()
         assert 'total_rows' in report
         assert 'age_distribution' in report
+
 
 if __name__ == "__main__":
     pytest.main([__file__])

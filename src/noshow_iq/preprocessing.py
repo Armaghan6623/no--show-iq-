@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+
 
 class DataPreprocessor:
     def __init__(self, filepath: str = None):
@@ -25,7 +25,7 @@ class DataPreprocessor:
         # 4. Advanced Features for Tests
         df['appointment_weekday'] = df['AppointmentDay'].dt.day_name().astype('category')
         df['is_weekend_appointment'] = df['AppointmentDay'].dt.dayofweek >= 5
-        df['age_group'] = pd.cut(df['Age'], bins=[-1, 18, 35, 60, 120], 
+        df['age_group'] = pd.cut(df['Age'], bins=[-1, 18, 35, 60, 120],
                                  labels=['Minor', 'Young', 'Adult', 'Senior']).astype('category')
 
         # 5. Encoding
@@ -43,16 +43,19 @@ class DataPreprocessor:
         }
         return processed_df, report
 
+
 # --- BRIDGE FUNCTIONS FOR TESTS AND RUN.PY ---
+
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """Standalone function for test_preprocessing.py to call."""
     return DataPreprocessor().clean_data(df)
 
+
 def preprocess_pipeline(filepath: str) -> pd.DataFrame:
     """Main pipeline for run.py."""
     preprocessor = DataPreprocessor(filepath)
     df, _ = preprocessor.preprocess()
-    features = ['Age', 'Hypertension', 'Diabetes', 'Alcoholism', 'Handicap', 
+    features = ['Age', 'Hypertension', 'Diabetes', 'Alcoholism', 'Handicap',
                 'SMS_received', 'days_in_advance', 'no_show']
     return df[features].dropna()
