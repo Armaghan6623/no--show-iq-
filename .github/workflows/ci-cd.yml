@@ -54,5 +54,6 @@ jobs:
         run: |
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.HF_TOKEN }}" \
-            https://huggingface.co/api/spaces/${{ secrets.DOCKER_USERNAME }}/noshow-iq/restart
-
+            -H "Content-Type: application/json" \
+            -d '{"repo_id": "Muhammad-Armaghan/NOSHOWIQ"}' \
+            https://huggingface.co/api/spaces/Muhammad-Armaghan/NOSHOWIQ/rebuild
