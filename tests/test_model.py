@@ -1,15 +1,15 @@
+import os
 import sys
 from pathlib import Path
 
-import pytest
-import pandas as pd
 import numpy as np
-import os
+import pandas as pd
+import pytest
 
 # Add the 'src' directory to the system path so we can import the noshow_iq package
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))  # noqa: E402
 
-from noshow_iq.model import NoShowModel, train_and_evaluate, split_data
+from noshow_iq.model import NoShowModel, split_data, train_and_evaluate  # noqa: E402
 
 
 class TestModel:
@@ -69,8 +69,7 @@ class TestModel:
 
     def test_model_prediction_format(self, mock_features):
         """Ensure predict returns 0/1 and predict_proba returns probabilities."""
-        
-        
+
         X = mock_features.drop('no_show', axis=1)
         y = mock_features['no_show']
 
@@ -105,6 +104,7 @@ class TestModel:
         # Check if it can still predict
         new_preds = new_model.predict(X.values[:1])
         assert len(new_preds) == 1
+
 
 if __name__ == "__main__":
     pytest.main([__file__])

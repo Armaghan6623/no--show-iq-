@@ -1,13 +1,17 @@
 import sys
 from pathlib import Path
 
-# Add parent directory to path to import our modules
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
-
-import pytest
 import pandas as pd
+import pytest
 
-from noshow_iq.preprocessing import preprocess_pipeline, clean_data, DataPreprocessor
+# Add parent directory to path to import our modules
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))  # noqa: E402
+
+from noshow_iq.preprocessing import (  # noqa: E402
+    DataPreprocessor,
+    clean_data,
+    preprocess_pipeline,
+)
 
 
 class TestPreprocessing:
@@ -57,8 +61,12 @@ class TestPreprocessing:
         assert all(result['days_in_advance'] >= 0)
 
     def test_negative_age_handling(self):
-        data = pd.DataFrame({'Age': [-5, 25], 'ScheduledDay': ['2016-04-29']*2,
-                             'AppointmentDay': ['2016-04-29']*2, 'No-show': ['No']*2})
+        data = pd.DataFrame({
+            'Age': [-5, 25],
+            'ScheduledDay': ['2016-04-29'] * 2,
+            'AppointmentDay': ['2016-04-29'] * 2,
+            'No-show': ['No'] * 2
+        })
         result = clean_data(data)
         assert all(result['Age'] >= 0)
 

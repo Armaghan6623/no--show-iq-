@@ -1,12 +1,13 @@
+import json
 import sys
 from pathlib import Path
+
 import pytest
-import json
 
 # Ensure the src directory is in the path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from noshow_iq.api import app, initialize_model
+from noshow_iq.api import app, initialize_model  # noqa: E402
 
 
 @pytest.fixture
@@ -17,6 +18,7 @@ def client():
     initialize_model('model.joblib')
     with app.test_client() as client:
         yield client
+
 
 def test_health_endpoint(client):
     response = client.get('/health')
@@ -29,9 +31,11 @@ def test_prediction_endpoint(client):
     payload = {
         "features": [30, 1, 0, 0, 0, 1, 5]  # Match 7-feature structure
     }
-    response = client.post('/predict',
-                           data=json.dumps(payload),
-                           content_type='application/json')
+    response = client.post(
+        '/predict',
+        data=json.dumps(payload),
+        content_type='application/json'
+    )
 
     assert response.status_code == 200
     data = json.loads(response.data)
@@ -47,9 +51,11 @@ def test_batch_prediction(client):
             [70, 1, 1, 0, 0, 1, 10]
         ]
     }
-    response = client.post('/predict_batch',
-                           data=json.dumps(payload),
-                           content_type='application/json')
+    response = client.post(
+        '/predict_batch',
+        data=json.dumps(payload),
+        content_type='application/json'
+    )
 
     assert response.status_code == 200
     data = json.loads(response.data)
